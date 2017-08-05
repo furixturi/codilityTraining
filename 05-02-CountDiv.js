@@ -44,3 +44,34 @@ function solution(A, B, K) {
     
     return n;
 }
+
+// 87%
+function solution(A, B, K) {
+    // write your code in JavaScript (Node.js 6.4.0)
+    let n = 0;
+    
+    if(K <= B) {
+        n = Math.floor(B / K) - Math.floor(A / K)
+    
+        if(A % K === 0) {
+            n += 1;    
+        }
+    }
+    
+    return n;
+}
+
+// 100%
+function solution(A, B, K) {
+    // write your code in JavaScript (Node.js 6.4.0)
+    let n = 0;
+    if(K <= B) {    
+        n = Math.floor(B / K) - Math.floor(A / K);
+        if(A % K === 0) n += 1;
+    } else if (K > B && A == 0) {
+        n = 1;
+    }
+    
+    return n;
+}
+
