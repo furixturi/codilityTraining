@@ -93,3 +93,73 @@ function solution(S, P, Q) {
     
     return r;
 }
+
+// weird O(M+N) 100% - only works for JS?
+// Doesn't codility count built-in functions O(N) time complexity?
+function solution(S, P, Q) {
+    // write your code in JavaScript (Node.js 6.4.0)
+    let r = new Array(P.length);
+    
+    for(let i =  0; i < P.length; i++) {
+        let dna = S.slice(P[i], Q[i]+1);
+        
+        if(dna.indexOf("A") > -1) {
+            r[i] = 1;
+        } else if(dna.indexOf("C") > -1) {
+            r[i] = 2;
+        } else if(dna.indexOf("G") > -1) {
+            r[i] = 3;
+        } else {
+            r[i] = 4;
+        }
+    }
+    
+    return r;
+}
+
+// O(M+N) 83%: wrong answer for "double character string"
+function solution(S, P, Q) {
+    // write your code in JavaScript (Node.js 6.4.0)
+    const imp = {
+            "A" : 1,
+            "C" : 2,
+            "G" : 3,
+            "T" : 4
+        };
+    let result = new Array(P.length);
+    let A = new Array(S.length + 1);
+    let C = new Array(S.length + 1);
+    let G = new Array(S.length + 1);
+    A[0] = C[0] = G[0] = 0;
+    
+    for(let i = 1; i < S.length + 1; i++) {
+        A[i] = A[i-1] + (S[i] === "A" ? 1 : 0);
+        C[i] = C[i-1] + (S[i] === "C" ? 1 : 0);
+        G[i] = G[i-1] + (S[i] === "G" ? 1 : 0);
+    }
+    
+    for(let j = 0; j < P.length; j++) {
+        if(P[j] === Q[j]) {
+            result[j] = imp[S[P[j]]];
+        }  else {
+            let end = Q[j], start = P[j] === 0 ? 0 : P[j] - 1;
+            if(A[end] - A[start] > 0) {
+                result[j] = imp["A"];
+            } else if (C[end] - C[start] > 0) {
+                result[j] = imp["C"];
+            } else if (G[end] - G[start] > 0) {
+                result[j] = imp["G"];
+            } else {
+                result[j] = imp["T"]
+            }
+        }
+    }
+    
+    return result;
+}
+
+
+
+
+
+
